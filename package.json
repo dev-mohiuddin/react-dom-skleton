@@ -1,0 +1,66 @@
+{
+  "name": "react-dom-skeleton",
+  "version": "1.0.0",
+  "description": "Enterprise-ready React package that automatically generates pixel-perfect loading skeletons by scanning DOM structure with zero configuration.",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.cjs.js"
+    }
+  },
+  "scripts": {
+    "start": "rollup -c -w",
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": "jest",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src/**/*.{ts,tsx}"
+  },
+  "keywords": [
+    "react",
+    "skeleton",
+    "loading",
+    "placeholder",
+    "ssr",
+    "next.js",
+    "dom",
+    "accessibility"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.5",
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "@typescript-eslint/parser": "^6.10.0",
+    "eslint": "^8.53.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rollup": "^4.5.0",
+    "rollup-plugin-dts": "^6.1.0",
+    "tslib": "^2.8.1",
+    "typescript": "^5.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/react-dom-skeleton.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/react-dom-skeleton/issues"
+  },
+  "homepage": "https://github.com/yourusername/react-dom-skeleton#readme"
+}

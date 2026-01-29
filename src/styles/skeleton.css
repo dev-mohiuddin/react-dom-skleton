@@ -1,0 +1,222 @@
+/**
+ * skeleton.css - GPU-accelerated animations for skeleton loading effect
+ * Implements 4 animation modes: shimmer, pulse, wave, and none
+ * Uses will-change and transform3d hacks for 60fps performance
+ */
+
+/* Container and base styles */
+.skeleton-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.skeleton-renderer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.skeleton-primitive {
+  position: absolute;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  -webkit-backface-visibility: hidden;
+}
+
+/* ============================================================================
+   SHIMMER ANIMATION
+   Horizontal sweep with gradient highlight
+   ============================================================================ */
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.skeleton-primitive[data-animation='shimmer'] {
+  animation: skeleton-shimmer 0.6s linear infinite;
+  background-size: 200% 100%;
+  /* GPU acceleration */
+  transform: translate3d(0, 0, 0);
+}
+
+/* Reduce motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-primitive[data-animation='shimmer'] {
+    animation: none;
+    opacity: 0.6;
+  }
+}
+
+/* ============================================================================
+   PULSE ANIMATION
+   Opacity fade in and out
+   ============================================================================ */
+@keyframes skeleton-pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes skeleton-pulse-color {
+  0% {
+    background-color: var(--skeleton-base-color);
+  }
+  50% {
+    background-color: var(--skeleton-highlight-color);
+  }
+  100% {
+    background-color: var(--skeleton-base-color);
+  }
+}
+
+.skeleton-primitive[data-animation='pulse'] {
+  animation: skeleton-pulse 0.6s ease-in-out infinite;
+  /* GPU acceleration */
+  transform: translate3d(0, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-primitive[data-animation='pulse'] {
+    animation: none;
+    opacity: 0.6;
+  }
+}
+
+/* ============================================================================
+   WAVE ANIMATION
+   Diagonal wave sweep across the element
+   ============================================================================ */
+@keyframes skeleton-wave {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.skeleton-primitive[data-animation='wave'] {
+  animation: skeleton-wave 0.8s ease-in-out infinite;
+  background-size: 200% 100%;
+  /* GPU acceleration */
+  transform: translate3d(0, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-primitive[data-animation='wave'] {
+    animation: none;
+    opacity: 0.6;
+  }
+}
+
+/* ============================================================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================================================ */
+
+/* Use GPU acceleration for smooth animations */
+.skeleton-primitive {
+  /* Enable 3D acceleration */
+  perspective: 1000px;
+  transform: translateZ(0);
+  
+  /* Optimize font rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Reduce animation complexity on low-end devices */
+@media (max-width: 480px) {
+  .skeleton-primitive[data-animation='shimmer'],
+  .skeleton-primitive[data-animation='wave'] {
+    animation-duration: 0.8s;
+  }
+}
+
+/* Dark theme adjustments */
+.skeleton-renderer[data-theme='dark'] .skeleton-primitive {
+  /* Dark theme colors are handled via backgroundColor prop */
+}
+
+/* Light theme adjustments */
+.skeleton-renderer[data-theme='light'] .skeleton-primitive {
+  /* Light theme colors are handled via backgroundColor prop */
+}
+
+/* ============================================================================
+   ACCESSIBILITY STYLES
+   ============================================================================ */
+
+/* Hide skeleton from screen readers */
+.skeleton-primitive[aria-hidden='true'] {
+  -webkit-user-select: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-primitive {
+    animation-duration: 5000s !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: more) {
+  .skeleton-primitive {
+    border: 1px solid currentColor;
+  }
+}
+
+/* ============================================================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================================================ */
+
+/* Tablet and below: slightly slower animations for better performance */
+@media (max-width: 768px) {
+  .skeleton-primitive[data-speed] {
+    animation-duration: calc(0.6s / var(--speed, 1) * 1.2) !important;
+  }
+}
+
+/* Desktop: normal speed */
+@media (min-width: 769px) {
+  .skeleton-primitive[data-speed] {
+    animation-duration: calc(0.6s / var(--speed, 1)) !important;
+  }
+}
+
+/* ============================================================================
+   TRANSITION STYLES
+   ============================================================================ */
+
+/* Smooth fade out when content loads */
+.skeleton-container[data-skeleton-enabled='false'] .skeleton-renderer {
+  animation: fade-out-skeleton 0.3s ease-out forwards;
+}
+
+@keyframes fade-out-skeleton {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
