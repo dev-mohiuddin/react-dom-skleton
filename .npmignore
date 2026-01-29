@@ -1,0 +1,50 @@
+# Development files (এগুলো npm এ যাবে না)
+src/
+examples/
+react-app/
+
+# Config files
+tsconfig.json
+rollup.config.js
+.gitignore
+.git/
+.github/
+
+# Documentation (README.md রাখতে হবে)
+START_HERE.md
+USAGE_GUIDE.md
+
+# Node
+node_modules/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+package-lock.json
+yarn.lock
+
+# Development
+.DS_Store
+.env
+.env.local
+.env.*.local
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.eslintrc*
+.prettierrc*
+
+# Test
+coverage/
+.nyc_output/
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+__tests__/
+
+# Build artifacts
+*.tsbuildinfo
